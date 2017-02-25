@@ -1,0 +1,31 @@
+security:
+    encoders:
+        AppBundle\Entity\User: bcrypt
+
+    role_hierarchy:
+            ROLE_ADMIN: [ROLE_USER]
+
+    providers:
+        database_users:
+            entity:
+                class: AppBundle:User
+                property: username
+
+    firewalls:
+        secured_area:
+            pattern: ^/
+            anonymous: true
+
+            form_login:
+                check_path: security_login
+                login_path: security_login
+                csrf_token_generator: security.csrf.token_manager
+                default_target_path: news_index
+
+            logout:
+                path: security_logout
+                target: news_index
+
+    access_control:
+        - { path: '^/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/admin', roles: ROLE_ADMIN }

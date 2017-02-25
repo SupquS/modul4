@@ -1,0 +1,48 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_post_show' %}
+
+{% block main %}
+    <h1>{{ news.title }}</h1>
+
+    <p class="post-metadata">
+        <span class="metadata"><i class="fa fa-calendar"></i> {{ news.created|date('d M, H:i') }}</span>
+        <span class="metadata"><i class="fa fa-user"></i> {{ news.author.username }}</span>
+        <span class="metadata"><i class="fa fa-list-alt"></i> {{ news.category }}</span>
+        <span class="metadata"><i class="fa fa-puzzle-piece"></i>
+            {% if not news.isPublished %}
+                <span class="text-warning">unpublished</span>
+                        {% else %}
+                <span class="text-success">published</span>
+            {% endif %}
+        </span>
+    </p>
+
+    <div class="well">
+        <p class="m-b-0"><strong>{{ 'Summary' }}</strong>: {{ news.excerpt }}</p>
+    </div>
+
+    {{ news.content|raw }}
+
+    {{ include('news/news_tags.html.twig') }}
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section">
+        <a href="{{ path('admin_news_index') }}" class="btn btn-lg btn-block btn-primary">
+            <i class="fa fa-list" aria-hidden="true"></i> {{ 'To News List' }}
+        </a>
+    </div>
+    <div class="section">
+        <a href="{{ path('admin_news_edit', { id: news.id }) }}" class="btn btn-lg btn-block btn-success">
+            <i class="fa fa-edit" aria-hidden="true"></i> {{ 'Edit content' }}
+        </a>
+    </div>
+
+    <div class="section">
+        {{ include('admin/news/delete_form.html.twig', { news: news }, with_context = false) }}
+    </div>
+
+    {{ parent() }}
+
+{% endblock %}

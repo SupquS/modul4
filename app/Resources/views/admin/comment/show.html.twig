@@ -1,0 +1,28 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'blog_post_show' %}
+
+{% block main %}
+    <h1>Comment #{{ comment.id }}</h1>
+
+    <p class="post-metadata">
+        <span class="metadata"><i class="fa fa-info"></i> {{ comment.id }}</span>
+        <span class="metadata"><i class="fa fa-calendar"></i> {{ comment.published|date('d M, H:i') }}</span>
+    </p>
+
+    {{ comment.content }}
+
+{% endblock %}
+
+{% block sidebar %}
+    {% if is_granted('edit', comment) %}
+        <div class="section">
+            <a class="btn btn-lg btn-block btn-success" href="{{ path('admin_comment_edit', { id: comment.id }) }}">
+                <i class="fa fa-edit" aria-hidden="true"></i> {{ 'Edit comment' }}
+            </a>
+        </div>
+    {% endif %}
+
+    {{ parent() }}
+
+{% endblock %}

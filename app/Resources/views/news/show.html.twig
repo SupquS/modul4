@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'blog_post_show' %}
+
+{% block main %}
+    <h1>{{ news.title }}</h1>
+
+    <p class="post-metadata">
+        <span class="metadata"><i class="fa fa-calendar"></i> {{ news.created|date('d M, H:i') }}</span>
+        <span class="metadata"><i class="fa fa-user"></i> {{ news.author.username }}</span>
+        <span class="metadata"><i class="fa fa-list-alt"></i> {{ news.category }}</span>
+    </p>
+    {% if not is_granted('IS_AUTHENTICATED_FULLY') and news.category.slug == 'analytics' %}
+        <div id="post-add-comment" class="well">
+            You need to Sign in to read a full content
+        </div>
+        {{ news.excerpt }}
+    {% else %}
+        {{ news.content|raw }}
+    {% endif %}
+
+    {{ include('news/news_tags.html.twig') }}
+
+    <div id="post-add-comment" class="well">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {{ render(controller('AppBundle:News:commentForm', { 'id': news.id })) }}
+        {% else %}
+            <p>
+                <a class="btn btn-success" href="{{ path('security_login') }}">
+                    <i class="fa fa-sign-in" aria-hidden="true"></i> {{ 'Sign in' }}
+                </a>
+                {{ 'To publish a comment' }}
+            </p>
+        {% endif %}
+    </div>
+
+    <h3>{{ 'Comments'}}</h3>
+
+    {% for comment in news.comments %}
+        <div class="row post-comment">
+            <a name="comment_{{ comment.id }}"></a>
+            <h4 class="col-sm-3">
+                <strong>{{ comment.author.username }}</strong> {{ 'Commented on' }}
+                <strong>{{ comment.published|date('d M, H:i') }}</strong>
+            </h4>
+            <div class="col-sm-9">
+                {{ comment.content }}
+            </div>
+        </div>
+    {% else %}
+        <div class="post-comment">
+            <p>{{ 'No Comments' }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block sidebar %}
+    {% if is_granted('edit', news) %}
+        <div class="section">
+            <a class="btn btn-lg btn-block btn-success" href="{{ path('admin_news_edit', { id: news.id }) }}">
+                <i class="fa fa-edit" aria-hidden="true"></i> {{ 'Edit' }}
+            </a>
+        </div>
+    {% endif %}
+
+    {# the parent() function includes the contents defined by the parent template
+      ('base.html.twig') for this block ('sidebar'). This is a very convenient way
+      to share common contents in different templates #}
+    {{ parent() }}
+
+{% endblock %}

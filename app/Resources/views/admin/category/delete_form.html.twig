@@ -1,0 +1,5 @@
+{{ include('admin/category/delete_category_confirmation.html.twig') }}
+<form action="{{ url('admin_category_delete', { id: category.id }) }}" method="post" data-confirmation="true">
+    <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
+    <input type="submit" value="{{ 'Delete category' }}" class="btn btn-lg btn-block btn-danger" />
+</form>

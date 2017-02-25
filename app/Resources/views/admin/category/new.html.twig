@@ -1,0 +1,20 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block main %}
+    <h1>Category creation</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <input type="submit" class="btn btn-primary" value="Create" />
+    {{ form_end(form) }}
+
+{% endblock %}
+{% block sidebar %}
+    <div class="section">
+        <a href="{{ path('admin_category_index') }}" class="btn btn-lg btn-block btn-primary">
+            <i class="fa fa-list" aria-hidden="true"></i> {{ 'To Category List' }}
+        </a>
+    </div>
+
+    {{ parent() }}
+
+{% endblock %}

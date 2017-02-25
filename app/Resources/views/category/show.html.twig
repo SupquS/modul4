@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'blog_post_show' %}
+
+{% block main %}
+    <h1>{{ category.title }}</h1>
+        {#{% for item in news %}#}
+        {#{% if category.id == 1 %}#}
+            {% for item in news %}
+                {#{% if item.isPublished %}#}
+        <article class="post">
+            <h2>
+                <a href="{{ path('news_show', { slug: item.slug }) }}">
+                    {{ item.title }}
+                </a>
+            </h2>
+
+            <p class="post-metadata">
+                <span class="metadata"><i class="fa fa-calendar"></i> {{ item.created|date('d M, H:i') }}</span>
+                <span class="metadata"><i class="fa fa-user"></i> {{ item.author.username }}</span>
+                <span class="metadata"><i class="fa fa-list-alt"></i> {{ item.category.slug }}</span>
+            </p>
+
+            {{ item.excerpt }}
+
+        </article>
+                {#{% endif %}#}
+            {#{% endfor %}#}
+    {% else %}
+        <div class="well">{{ 'No news found' }}</div>
+    {% endfor %}
+        {#{% endif %}#}
+
+    {% if pager.haveToPaginate %}
+    <div class="navigation text-center">
+    {{ pagerfanta(pager, 'twitter_bootstrap3', { routeName: 'category_index_paginated', "pageParameter": "[page]" }) }}
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block sidebar %}
+    {% if is_granted('edit', category) %}
+        <div class="section">
+            <a class="btn btn-lg btn-block btn-success" href="{{ path('admin_news_edit', { id: category.id }) }}">
+                <i class="fa fa-edit" aria-hidden="true"></i> {{ 'Edit' }}
+            </a>
+        </div>
+    {% endif %}
+
+    {# the parent() function includes the contents defined by the parent template
+      ('base.html.twig') for this block ('sidebar'). This is a very convenient way
+      to share common contents in different templates #}
+    {{ parent() }}
+
+{% endblock %}

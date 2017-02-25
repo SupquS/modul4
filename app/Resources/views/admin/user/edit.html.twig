@@ -1,0 +1,27 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_post_edit' %}
+
+{% block main %}
+    <h1>{{ ('Edit User')|upper ({id: user.id}) }}</h1>
+
+    {{ include('admin/news/_form.html.twig', {
+        form: edit_form,
+        button_label: 'Update',
+        include_back_to_home_link: false,
+    }, with_context = false) }}
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section">
+        <a href="{{ path('admin_user_index') }}" class="btn btn-lg btn-block btn-primary">
+            <i class="fa fa-list" aria-hidden="true"></i> {{ 'To User List' }}
+        </a>
+    </div>
+    {#<div class="section actions">#}
+        {#{{ include('admin/news/delete_form.html.twig', { news: news }, with_context = false) }}#}
+    {#</div>#}
+
+    {{ parent() }}
+
+{% endblock %}

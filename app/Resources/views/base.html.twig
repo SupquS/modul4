@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>{% block title %}PHP Academy App{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/font-awesome-4.6.3.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/highlight-solarized-light.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-tagsinput.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+
+<body id="{% block body_id %}{% endblock %}">
+
+{% block header %}
+    <header>
+        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{{ path('homepage') }}">
+                        Modul 4 App
+                    </a>
+
+                    <button type="button" class="navbar-toggle"
+                            data-toggle="collapse"
+                            data-target=".navbar-collapse">
+                        <span class="sr-only">{{ 'menu' }}</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+
+                        {% block header_navigation_links %}
+                            <li>
+                                <a href="{{ path('news_index') }}">
+                                    <i class="fa fa-newspaper-o" aria-hidden="true"></i> {{ 'News' }}
+                                </a>
+                            </li>
+
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li>
+                                    <a href="{{ path('admin_news_index') }}">
+                                        <i class="fa fa-lock" aria-hidden="true"></i> {{ 'Admin Menu' }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endblock %}
+
+                        {% if app.user %}
+                            <li>
+                                <a href="{{ path('security_logout') }}">
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i> {{ 'Logout' }}
+                                </a>
+                            </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ path('security_login') }}">
+                                        <i class="fa fa-sign-in" aria-hidden="true"></i> {{ 'Login' }}
+                                    </a>
+                                </li>
+                        {% endif %}
+
+                        {#<li class="dropdown">#}
+                            {#<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="locales">#}
+                                {#<i class="fa fa-globe" aria-hidden="true"></i>#}
+                                {#<span class="caret"></span>#}
+                                {#<span class="sr-only">{{ 'menu.choose_language' }}</span>#}
+                            {#</a>#}
+                        {#</li>#}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+<div class="container body-container">
+    {% block body %}
+        <div class="row">
+            <div id="main" class="col-sm-9">
+                {{ include('default/flash_massages.html.twig') }}
+
+                {% block main %}{% endblock %}
+            </div>
+
+            <div id="sidebar" class="col-sm-3">
+                {% block sidebar %}
+                    {#{{ render_esi(controller('FrameworkBundle:Template:template', {#}
+                        {#'template': 'blog/about.html.twig',#}
+                        {#'sharedAge': 600,#}
+                        {#'_locale': app.request.locale#}
+                    {#})) }}#}
+                {% endblock %}
+            </div>
+        </div>
+    {% endblock %}
+</div>
+<div class="subs-popup alert alert-warning alert-dismissable"></div>
+<div class="cookie"></div>
+{% block footer %}
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div id="footer-copyright" class="col-md-6">
+                    <p>&copy; 2016 - {{ 'now'|date('Y') }} | PHP Academy Modul 4 Project</p>
+                </div>
+                <div id="footer-resources" class="col-md-6">
+                    <p>
+                        <a href="https://www.facebook.com/web.programming.courses/" title="PHP Academy Facebook">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/jquery-2.2.4.min.js') }}"></script>
+    <script src="{{ asset('js/moment.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-3.3.7.min.js') }}"></script>
+    <script src="{{ asset('js/highlight.pack.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-tagsinput.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.cookie.js') }}"></script>
+    <script src="{{ asset('js/subscribe.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/exit-popup.js') }}"></script>
+{% endblock %}
+
+</body>
+</html>

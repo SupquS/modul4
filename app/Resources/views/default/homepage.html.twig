@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'homepage' %}
+
+{% block body %}
+
+    <div class="page-header">
+        <h1>{{ 'Homepage' }}</h1>
+    </div>
+
+    <div class="row">
+        {% for cat in categories %}
+        <div class="col-sm-6">
+            <div class="jumbotron">
+                <p>
+                    {#{{ cat.id }}#}
+                    <a href="{{ path('category_show', {'catSlug': cat.slug}) }}">{{ cat.title|upper }}</a>
+                    {% if cat.id == 1 %}
+                        {% for item in business %}
+                            {% if item.isPublished %}
+                                <li>
+                                    <a href="{{ path('news_show', {'slug': item.slug}) }}">{{ item.title|slice(0,60) }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if cat.id == 2 %}
+                        {% for item in analytics %}
+                            {% if item.isPublished %}
+                                <li>
+                                    <a href="{{ path('news_show', {'slug': item.slug}) }}">{{ item.title|slice(0,60) }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if cat.id == 4 %}
+                        {% for item in sport %}
+                            {% if item.isPublished %}
+                                <li>
+                                    <a href="{{ path('news_show', {'slug': item.slug}) }}">{{ item.title|slice(0,60) }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if cat.id == 5 %}
+                        {% for item in politics %}
+                            {% if item.isPublished %}
+                                <li>
+                                    <a href="{{ path('news_show', {'slug': item.slug}) }}">{{ item.title|slice(0,60) }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="col-sm-6">
+            <div class="jumbotron">
+            {% for tag in tags %}
+                <a href="#">{{ tag.name }}</a>
+            {% endfor %}
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="jumbotron">
+                {% for com in comments %}
+                    {{ com.id }} - {{ com.content|slice(0,50) }}<br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

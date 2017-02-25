@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'blog_index' %}
+
+{% block main %}
+    {% for item in news %}
+        <article class="post">
+            <h2>
+                <a href="{{ path('category_show', { catSlug: item.slug }) }}">
+                    {{ item.title }}
+                </a>
+            </h2>
+
+            <p class="post-metadata">
+                {#<span class="metadata"><i class="fa fa-calendar"></i> {{ item.created|date('d M, H:i') }}</span>#}
+                {#<span class="metadata"><i class="fa fa-user"></i> {{ item.author.username }}</span>#}
+                <span class="metadata"><i class="fa fa-list-alt"></i> {{ item.slug }}</span>
+            </p>
+
+            {#{{ item.excerpt }}#}
+
+            {#{{ include('news/news_tags.html.twig') }}#}
+        </article>
+    {% else %}
+        <div class="well">{{ 'No news found' }}</div>
+    {% endfor %}
+
+    {#{% if news.haveToPaginate %}#}
+        {#<div class="navigation text-center">#}
+            {#{{ pagerfanta(news, 'twitter_bootstrap3_translated', { routeName: 'category_index_paginated' }) }}#}
+        {#</div>#}
+    {#{% endif %}#}
+{% endblock %}
+
+{% block sidebar %}
+    {{ parent() }}
+
+{% endblock %}

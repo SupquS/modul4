@@ -1,0 +1,28 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'blog_post_show' %}
+
+{% block main %}
+    <h1>{{ category.title }}</h1>
+
+    <p class="post-metadata">
+        <span class="metadata"><i class="fa fa-calendar"></i> {{ category.title }}</span>
+        <span class="metadata"><i class="fa fa-user"></i> {{ category.slug }}</span>
+    </p>
+
+    {{ category.title }}
+
+{% endblock %}
+
+{% block sidebar %}
+    {% if is_granted('edit', category) %}
+        <div class="section">
+            <a class="btn btn-lg btn-block btn-success" href="{{ path('admin_category_edit', { id: category.id }) }}">
+                <i class="fa fa-edit" aria-hidden="true"></i> {{ 'Edit category' }}
+            </a>
+        </div>
+    {% endif %}
+
+    {{ parent() }}
+
+{% endblock %}

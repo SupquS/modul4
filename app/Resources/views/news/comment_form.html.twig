@@ -1,0 +1,20 @@
+{{ form_start(form, { method: 'POST', action: path('comment_new', { 'newsSlug': news.slug }) }) }}
+
+<fieldset>
+    <legend>{{ 'Add a comment' }}</legend>
+
+    {{ form_errors(form) }}
+
+    <div class="form-group {% if not form.content.vars.valid %}has-error{% endif %}">
+        {{ form_label(form.content, 'Content', { label_attr: { class: 'hidden' }}) }}
+
+        {{ form_errors(form.content) }}
+
+        {{ form_widget(form.content, { attr: { rows: 10, cols: 50 } }) }}
+    </div>
+
+    <div class="form-group">
+        <button class="btn btn-primary pull-right" type="submit">{{ 'Publish a comment' }}</button>
+    </div>
+</fieldset>
+{{ form_end(form) }}
