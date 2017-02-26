@@ -10,7 +10,7 @@
         <tr>
             <th scope="col">{{ 'Username' }}</th>
             <th scope="col"><i class="fa fa-calendar" aria-hidden="true"></i> {{ 'Password' }}</th>
-            {#<th scope="col"><i class="fa fa-list-alt" aria-hidden="true"></i> {{ 'Role' }}</th>#}
+            <th scope="col"><i class="fa fa-list-alt" aria-hidden="true"></i> {{ 'Role' }}</th>
             <th scope="col"><i class="fa fa-list-alt" aria-hidden="true"></i> {{ 'E-mail' }}</th>
             <th scope="col" class="text-center"><i class="fa fa-cogs" aria-hidden="true"></i> {{ 'Actions' }}</th>
         </tr>
@@ -20,13 +20,11 @@
             <tr>
                 <td>{{ item.username }}</td>
                 <td>{{ item.password|slice(0,20) }}</td>
-                {#{% for i in item.roles %}#}
-                    {#{% if is_granted('ROLE_ADMIN') %}#}
-                {#<td>{{ 'Administrator' }}</td>#}
-                    {#{% else %}#}
-                {#<td>{{ 'User' }}</td>#}
-                    {#{% endif %}#}
-                {#{% endfor %}#}
+                    {% if item.roles[0] == 'ROLE_ADMIN' %}
+                <td>{{ 'Administrator' }}</td>
+                    {% else %}
+                <td>{{ 'User' }}</td>
+                    {% endif %}
                 <td>{{ item.email }}</td>
                 <td class="text-right">
                     <div class="item-actions">

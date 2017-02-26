@@ -68,7 +68,8 @@
         <div class="col-sm-6">
             <div class="jumbotron">
                 {% for com in comments %}
-                    {{ com.id }} - {{ com.content|slice(0,50) }}<br>
+                    {{ com.id }} - {{ com.content|slice(0,50) }} - by #{{ com.author }} <br>at
+                    {{ com.published|date('d m y, H:i') }}<br>
                 {% endfor %}
             </div>
         </div>
