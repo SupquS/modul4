@@ -46,7 +46,6 @@ class NewsController extends Controller
      */
     public function newsShowAction(News $news)
     {
-        dump($news);
         return $this->render('news/show.html.twig', [
             'news' => $news,
         ]);

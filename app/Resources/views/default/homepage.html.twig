@@ -24,7 +24,7 @@
           <img src="http://placehold.it/1920x1080/878787/ffffff?text={{ item.title }}" alt="">
           <div class="carousel-caption">
             <h3><a href="{{ path('news_show', {'slug': item.slug}) }}">Read more</a></h3>
-            <p>{{ item.excerpt }}</p>
+            <p>{{ item.excerpt|slice(0,100) }}</p>
            </div>
         </div>
         {% endfor %}
