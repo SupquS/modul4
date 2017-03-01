@@ -1,26 +1,70 @@
 {% extends 'base.html.twig' %}
 
+{% block carousel %}
+<div class="container">
+
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+      </ol>
+
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner" role="listbox">
+        {% for item in news %}
+        {% if loop.first %}
+        <div class="item active">
+        {% else %}
+        <div class="item">
+        {% endif %}
+          <img src="http://placehold.it/1920x1080/878787/ffffff?text={{ item.title }}" alt="">
+          <div class="carousel-caption">
+            <h3><a href="{{ path('news_show', {'slug': item.slug}) }}">Read more</a></h3>
+            <p>{{ item.excerpt }}</p>
+           </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Controls -->
+      <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+</div>
+
+
+{% endblock %}
+
 {% block body_id 'homepage' %}
 
 {% block body %}
 
     <div class="page-header">
-        <h1>{{ 'Homepage' }}</h1>
+        <h1>{{ 'Project Homepage' }}</h1>
     </div>
 
     <div class="row">
         {% for cat in categories %}
         <div class="col-sm-6">
             <div class="jumbotron">
-                <p>
-                    {#{{ cat.id }}#}
-                    <a href="{{ path('category_show', {'catSlug': cat.slug}) }}">{{ cat.title|upper }}</a>
-                    {% if cat.id == 1 %}
+                    <p>
+                        <a href="{{ path('category_show', {'catSlug': cat.slug}) }}">{{ cat.title|upper }}</a>
+                    </p>
+                        {% if cat.id == 1 %}
                         {% for item in business %}
                             {% if item.isPublished %}
-                                <li>
-                                    <a href="{{ path('news_show', {'slug': item.slug}) }}">{{ item.title|slice(0,60) }}</a>
-                                </li>
+                                <a href="{{ path('news_show', {'slug': item.slug}) }}">{{ item.title|slice(0,60) }}</a>
+                                <br>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
@@ -28,9 +72,8 @@
                     {% if cat.id == 2 %}
                         {% for item in analytics %}
                             {% if item.isPublished %}
-                                <li>
-                                    <a href="{{ path('news_show', {'slug': item.slug}) }}">{{ item.title|slice(0,60) }}</a>
-                                </li>
+                                <a href="{{ path('news_show', {'slug': item.slug}) }}">{{ item.title|slice(0,60) }}</a>
+                                <br>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
@@ -38,9 +81,8 @@
                     {% if cat.id == 4 %}
                         {% for item in sport %}
                             {% if item.isPublished %}
-                                <li>
-                                    <a href="{{ path('news_show', {'slug': item.slug}) }}">{{ item.title|slice(0,60) }}</a>
-                                </li>
+                                <a href="{{ path('news_show', {'slug': item.slug}) }}">{{ item.title|slice(0,60) }}</a>
+                                <br>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
@@ -48,20 +90,18 @@
                     {% if cat.id == 5 %}
                         {% for item in politics %}
                             {% if item.isPublished %}
-                                <li>
-                                    <a href="{{ path('news_show', {'slug': item.slug}) }}">{{ item.title|slice(0,60) }}</a>
-                                </li>
+                                <a href="{{ path('news_show', {'slug': item.slug}) }}">{{ item.title|slice(0,60) }}</a>
+                                <br>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
-                </p>
             </div>
         </div>
         {% endfor %}
         <div class="col-sm-6">
             <div class="jumbotron">
             {% for tag in tags %}
-                <a href="#">{{ tag.name }}</a>
+               <p><a href="#">{{ tag.name }}</a></p>
             {% endfor %}
             </div>
         </div>

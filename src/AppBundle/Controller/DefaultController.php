@@ -29,6 +29,8 @@ class DefaultController extends Controller
         $sportPost = $this->getDoctrine()->getRepository(News::class)->queryNewsByCat('sport', 5);
         $politicsPost = $this->getDoctrine()->getRepository(News::class)->queryNewsByCat('politics', 5);
 
+        $news = $this->getDoctrine()->getRepository(News::class)->findBy([],['id' => 'DESC'], 5);
+
         $tags = $this->getDoctrine()->getRepository(Tag::class)->findAll();
         $comments = $this->getDoctrine()->getRepository(Comment::class)->findAll();
 
@@ -40,6 +42,7 @@ class DefaultController extends Controller
             'politics' => $politicsPost,
             'comments' => $comments,
             'tags' => $tags,
+            'news' => $news
         ]);
     }
 }

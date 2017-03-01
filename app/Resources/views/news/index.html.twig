@@ -3,13 +3,16 @@
 {% block body_id 'blog_index' %}
 
 {% block main %}
+    <div class="page-header">
+        <h1>{{ 'Project News' }}</h1>
+    </div>
     {% for item in news %}
         <article class="post">
-            <h2>
+            <h3>
                 <a href="{{ path('news_show', { slug: item.slug }) }}">
                     {{ item.title }}
                 </a>
-            </h2>
+            </h3>
 
             <p class="post-metadata">
                 <span class="metadata"><i class="fa fa-calendar"></i> {{ item.created|date('d M, H:i') }}</span>
